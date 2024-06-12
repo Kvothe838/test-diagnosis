@@ -6,9 +6,10 @@ import (
 	"net/http"
 )
 
-func New() *handler {
+func New(interactor Interactor) *handler {
 	h := &handler{
-		router: gin.New(),
+		router:     gin.New(),
+		interactor: interactor,
 	}
 
 	h.setupRouter()
@@ -16,7 +17,8 @@ func New() *handler {
 }
 
 type handler struct {
-	router *gin.Engine
+	router     *gin.Engine
+	interactor Interactor
 }
 
 func (h *handler) setupRouter() {
@@ -24,6 +26,7 @@ func (h *handler) setupRouter() {
 	h.router.Use(gin.Recovery())
 
 	h.router.GET("/health", h.health)
+	h.router.GET("/diagnoses", h.searchDiagnoses)
 }
 
 func (h *handler) health(ctx *gin.Context) {
