@@ -3,7 +3,7 @@ package main
 import (
 	"TopDoctorsBackendChallenge/internal/app/controller"
 	"TopDoctorsBackendChallenge/internal/app/server"
-	"TopDoctorsBackendChallenge/internal/database/memory"
+	"TopDoctorsBackendChallenge/internal/database/postgres"
 	"TopDoctorsBackendChallenge/internal/pkg/graceful"
 	"TopDoctorsBackendChallenge/internal/pkg/logger"
 	"TopDoctorsBackendChallenge/internal/services"
@@ -13,8 +13,8 @@ import (
 func main() {
 	ctx := context.Background()
 
-	diagnosesRepo := memory.NewDiagnosesRepository()
-	interactor := services.NewInteractor(diagnosesRepo)
+	db := postgres.New(ctx, "postgres", "topDoctors", "admin", "localhost")
+	interactor := services.NewInteractor(db)
 
 	setupRestAPI(ctx, interactor, "8080")
 

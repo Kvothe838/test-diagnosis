@@ -20,7 +20,7 @@ type Server struct {
 
 func New(port string) *Server {
 	srv := &http.Server{
-		Addr:              fmt.Sprintf(":%s", port),
+		Addr:              fmt.Sprintf("localhost:%s", port),
 		ReadHeaderTimeout: time.Duration(_defaultHeaderTimeoutInSecs) * time.Second,
 	}
 	return &Server{
