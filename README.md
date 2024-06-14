@@ -1,5 +1,7 @@
 ﻿# TopDoctors Backend Challenge
 
+ Solution for Top Doctors Backend Challenge: https://bitbucket.org/topdoctors/backend-developer/src/master/challenge.md.
+
  ## Prerequisites
 
  - Install Golang: https://go.dev/doc/install
