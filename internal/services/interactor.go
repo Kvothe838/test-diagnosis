@@ -2,6 +2,8 @@ package services
 
 import (
 	"TopDoctorsBackendChallenge/internal/models"
+	"TopDoctorsBackendChallenge/internal/pkg/clock"
+	uuid2 "TopDoctorsBackendChallenge/internal/pkg/uuid"
 	"context"
 )
 
@@ -19,12 +21,16 @@ type repository interface {
 	patientsRepository
 }
 
-func NewInteractor(repo repository) *interactor {
+func NewInteractor(repo repository, UUID uuid2.UUID, clock clock.Clock) *interactor {
 	return &interactor{
-		repo: repo,
+		repo:  repo,
+		UUID:  UUID,
+		clock: clock,
 	}
 }
 
 type interactor struct {
-	repo repository
+	repo  repository
+	UUID  uuid2.UUID
+	clock clock.Clock
 }

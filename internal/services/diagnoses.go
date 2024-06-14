@@ -4,9 +4,7 @@ import (
 	"TopDoctorsBackendChallenge/internal/models"
 	topDoctorsErrors "TopDoctorsBackendChallenge/internal/pkg/errors"
 	"context"
-	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	"time"
 )
 
 func (in *interactor) CreateDiagnosis(ctx context.Context, patientID, description string, prescription *string) (models.Diagnosis, error) {
@@ -19,8 +17,8 @@ func (in *interactor) CreateDiagnosis(ctx context.Context, patientID, descriptio
 		return models.Diagnosis{}, topDoctorsErrors.PatientNotFoundErr
 	}
 
-	now := time.Now()
-	diagnosisID := uuid.New().String()
+	now := in.clock.Now()
+	diagnosisID := in.UUID.GetNew()
 
 	diagnosis := models.Diagnosis{
 		ID: diagnosisID,

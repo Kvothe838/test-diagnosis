@@ -7,7 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (r repository) DoesPatientExist(ctx context.Context, patientID string) (bool, error) {
+func (r *repository) DoesPatientExist(ctx context.Context, patientID string) (bool, error) {
 	query := `
 		SELECT 1
 		FROM patients
@@ -27,7 +27,7 @@ func (r repository) DoesPatientExist(ctx context.Context, patientID string) (boo
 	return true, nil
 }
 
-func (r repository) getPatientByID(ctx context.Context, ID string) (models.Patient, error) {
+func (r *repository) getPatientByID(ctx context.Context, ID string) (models.Patient, error) {
 	query := `
 		SELECT id, name, surname, document_id
 		FROM patients
@@ -54,7 +54,7 @@ func (r repository) getPatientByID(ctx context.Context, ID string) (models.Patie
 	return patient, nil
 }
 
-func (r repository) getPatientDocumentByID(ctx context.Context, ID int) (models.Document, error) {
+func (r *repository) getPatientDocumentByID(ctx context.Context, ID int) (models.Document, error) {
 	query := `
 		SELECT d.info, dt.id, dt.name
 		FROM documents d

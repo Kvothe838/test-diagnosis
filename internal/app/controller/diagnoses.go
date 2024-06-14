@@ -40,12 +40,14 @@ func (h *handler) searchDiagnoses(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, diagnosesDTO)
 }
 
+type CreateDiagnosisRequest struct {
+	PatientID    string  `json:"patient_id"`
+	Description  string  `json:"description"`
+	Prescription *string `json:"prescription"`
+}
+
 func (h *handler) createDiagnosis(ctx *gin.Context) {
-	var body struct {
-		PatientID    string  `json:"patient_id"`
-		Description  string  `json:"description"`
-		Prescription *string `json:"prescription"`
-	}
+	var body CreateDiagnosisRequest
 
 	err := ctx.BindJSON(&body)
 	if err != nil {
