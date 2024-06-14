@@ -77,7 +77,7 @@ func buildQuery(baseQuery string, filters models.SearchDiagnosesFilters) (string
 	}
 
 	if len(filters.PatientName) != 0 {
-		query += " AND CONCAT(p.name, ' ', p.surname) LIKE :full_name"
+		query += " AND LOWER(CONCAT(p.name, ' ', p.surname)) LIKE LOWER(:full_name)"
 		args["full_name"] = "%" + filters.PatientName + "%"
 	}
 
