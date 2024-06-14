@@ -12,6 +12,8 @@
 
  - Create local-env/config.yaml, add same env variables than local-env/config-example.yaml and set their values according to your Postgres connection.
 
+ - Execute backup for Postgres db to have all the schema and examples already saved. Use file under internal/database/scripts.
+
  ## Run
 
  To run the backend, just execute on the root of the project the following command:
