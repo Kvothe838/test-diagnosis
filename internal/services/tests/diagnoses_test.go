@@ -126,6 +126,69 @@ func TestCreateDiagnosis(t *testing.T) {
 				assert.ErrorIs(t, errors.Cause(err), topDoctorsErrors.PatientNotFoundErr)
 			},
 		},
+		{
+			name: "error on checking if patient exists",
+			prepareRepositories: func(mock *MockRepository) {
+				mock.EXPECT().DoesPatientExist(
+					gomock.Any(),
+					patientID,
+				).Return(
+					false,
+					errors.New("error"),
+				)
+
+				mock.EXPECT().CreateDiagnosis(
+					gomock.Any(),
+					models.Diagnosis{
+						ID:           diagnosisID,
+						Patient:      models.Patient{ID: patientID},
+						Date:         now,
+						Description:  description,
+						Prescription: &prescription,
+					},
+				).Times(0)
+			},
+			patientID:    patientID,
+			description:  description,
+			prescription: &prescription,
+			assertOnResult: func(diagnosis models.Diagnosis, err error) {
+				assert.Error(t, err)
+				assert.ErrorContains(t, err, "could not check if patient exists")
+			},
+		},
+		{
+			name: "error on creating diagnosis",
+			prepareRepositories: func(mock *MockRepository) {
+				mock.EXPECT().DoesPatientExist(
+					gomock.Any(),
+					patientID,
+				).Return(
+					true,
+					nil,
+				)
+
+				mock.EXPECT().CreateDiagnosis(
+					gomock.Any(),
+					models.Diagnosis{
+						ID:           diagnosisID,
+						Patient:      models.Patient{ID: patientID},
+						Date:         now,
+						Description:  description,
+						Prescription: &prescription,
+					},
+				).Return(
+					models.Diagnosis{},
+					errors.New("error"),
+				)
+			},
+			patientID:    patientID,
+			description:  description,
+			prescription: &prescription,
+			assertOnResult: func(diagnosis models.Diagnosis, err error) {
+				assert.Error(t, err)
+				assert.ErrorContains(t, err, "could not create diagnosis")
+			},
+		},
 	}
 
 	for _, test := range tests {
