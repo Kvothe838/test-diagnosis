@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "845d09cb-c91e-4400-8e20-97b465d7c64e",
+		"name": "Top Doctors Backend Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8851452"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/health",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get diagnoses",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/diagnoses?patientName=pedro&date=2024-06-14",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"diagnoses"
+					],
+					"query": [
+						{
+							"key": "patientName",
+							"value": "pedro"
+						},
+						{
+							"key": "date",
+							"value": "2024-06-14"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create diagnosis",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patient_id\": \"a9ba1076-d090-4294-957c-44a7beb8c36f\",\r\n    \"description\": \"Un diagnóstico positivo.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/diagnoses",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"diagnoses"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	]
+}

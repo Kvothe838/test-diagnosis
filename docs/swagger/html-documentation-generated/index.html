@@ -1,0 +1,480 @@
+<!doctype html>
+<html>
+  <head>
+    <title>TopDoctors-Backend-Challenge</title>
+    <style type="text/css">
+      body {
+      	font-family: Trebuchet MS, sans-serif;
+      	font-size: 15px;
+      	color: #444;
+      	margin-right: 24px;
+      }
+      
+      h1	{
+      	font-size: 25px;
+      }
+      h2	{
+      	font-size: 20px;
+      }
+      h3	{
+      	font-size: 16px;
+      	font-weight: bold;
+      }
+      hr	{
+      	height: 1px;
+      	border: 0;
+      	color: #ddd;
+      	background-color: #ddd;
+      }
+      
+      .app-desc {
+        clear: both;
+        margin-left: 20px;
+      }
+      .param-name {
+        width: 100%;
+      }
+      .license-info {
+        margin-left: 20px;
+      }
+      
+      .license-url {
+        margin-left: 20px;
+      }
+      
+      .model {
+        margin: 0 0 0px 20px;
+      }
+      
+      .method {
+        margin-left: 20px;
+      }
+      
+      .method-notes	{
+      	margin: 10px 0 20px 0;
+      	font-size: 90%;
+      	color: #555;
+      }
+      
+      pre {
+        padding: 10px;
+        margin-bottom: 2px;
+      }
+      
+      .http-method {
+       text-transform: uppercase;
+      }
+      
+      pre.get {
+        background-color: #0f6ab4;
+      }
+      
+      pre.post {
+        background-color: #10a54a;
+      }
+      
+      pre.put {
+        background-color: #c5862b;
+      }
+      
+      pre.delete {
+        background-color: #a41e22;
+      }
+      
+      .huge	{
+      	color: #fff;
+      }
+      
+      pre.example {
+        background-color: #f3f3f3;
+        padding: 10px;
+        border: 1px solid #ddd;
+      }
+      
+      code {
+        white-space: pre;
+      }
+      
+      .nickname {
+        font-weight: bold;
+      }
+      
+      .method-path {
+        font-size: 1.5em;
+        background-color: #0f6ab4;
+      }
+      
+      .up {
+        float:right;
+      }
+      
+      .parameter {
+        width: 500px;
+      }
+      
+      .param {
+        width: 500px;
+        padding: 10px 0 0 20px;
+        font-weight: bold;
+      }
+      
+      .param-desc {
+        width: 700px;
+        padding: 0 0 0 20px;
+        color: #777;
+      }
+      
+      .param-type {
+        font-style: italic;
+      }
+      
+      .param-enum-header {
+      width: 700px;
+      padding: 0 0 0 60px;
+      color: #777;
+      font-weight: bold;
+      }
+      
+      .param-enum {
+      width: 700px;
+      padding: 0 0 0 80px;
+      color: #777;
+      font-style: italic;
+      }
+      
+      .field-label {
+        padding: 0;
+        margin: 0;
+        clear: both;
+      }
+      
+      .field-items	{
+      	padding: 0 0 15px 0;
+      	margin-bottom: 15px;
+      }
+      
+      .return-type {
+        clear: both;
+        padding-bottom: 10px;
+      }
+      
+      .param-header {
+        font-weight: bold;
+      }
+      
+      .method-tags {
+        text-align: right;
+      }
+      
+      .method-tag {
+        background: none repeat scroll 0% 0% #24A600;
+        border-radius: 3px;
+        padding: 2px 10px;
+        margin: 2px;
+        color: #FFF;
+        display: inline-block;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+  <h1>TopDoctors-Backend-Challenge</h1>
+    <div class="app-desc">The API for the TopDoctors Backend Challenge.</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="hello@helloreverb.com">hello@helloreverb.com</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/Kvothe838/TopDoctorsBackendChallenge/1.0.0</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Diagnoses">Diagnoses</a></h4>
+  <ul>
+  <li><a href="#createDiagnosis"><code><span class="http-method">post</span> /diagnoses</code></a></li>
+  <li><a href="#getDiagnoses"><code><span class="http-method">get</span> /diagnoses</code></a></li>
+  </ul>
+
+  <h1><a name="Diagnoses">Diagnoses</a></h1>
+  <div class="method"><a name="createDiagnosis"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /diagnoses</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">createDiagnosis</span>)</div>
+    <div class="method-notes"></div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#CreateDiagnosisRequest">CreateDiagnosisRequest</a> (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash;  </div>
+                </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Diagnosis">Diagnosis</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "date" : "2023-01-01T00:00:00.000+00:00",
+  "prescription" : "Prescrition",
+  "patient" : {
+    "surname" : "Picapiedras",
+    "document" : {
+      "type" : {
+        "name" : "DNI",
+        "id" : 1
+      },
+      "info" : "0000000A"
+    },
+    "name" : "Pedro",
+    "id" : "3cc24c90-3da8-49fd-8755-f906dfdd9957",
+    "contacts" : [ {
+      "type" : {
+        "name" : "email",
+        "id" : 1
+      },
+      "info" : "example@gmail.com"
+    }, {
+      "type" : {
+        "name" : "email",
+        "id" : 1
+      },
+      "info" : "example@gmail.com"
+    } ]
+  },
+  "description" : "Description",
+  "id" : "3cc24c90-3da8-49fd-8755-f906dfdd9957"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successfully created diagnosis
+        <a href="#Diagnosis">Diagnosis</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getDiagnoses"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /diagnoses</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">getDiagnoses</span>)</div>
+    <div class="method-notes">search diagnoses by filters</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">patientName (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; text to filter by patient name and surname </div>      <div class="param">date (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; date to filter by diagnosis created date format: date</div>    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Diagnosis">Diagnosis</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "date" : "2023-01-01T00:00:00.000+00:00",
+  "prescription" : "Prescrition",
+  "patient" : {
+    "surname" : "Picapiedras",
+    "document" : {
+      "type" : {
+        "name" : "DNI",
+        "id" : 1
+      },
+      "info" : "0000000A"
+    },
+    "name" : "Pedro",
+    "id" : "3cc24c90-3da8-49fd-8755-f906dfdd9957",
+    "contacts" : [ {
+      "type" : {
+        "name" : "email",
+        "id" : 1
+      },
+      "info" : "example@gmail.com"
+    }, {
+      "type" : {
+        "name" : "email",
+        "id" : 1
+      },
+      "info" : "example@gmail.com"
+    } ]
+  },
+  "description" : "Description",
+  "id" : "3cc24c90-3da8-49fd-8755-f906dfdd9957"
+}, {
+  "date" : "2023-01-01T00:00:00.000+00:00",
+  "prescription" : "Prescrition",
+  "patient" : {
+    "surname" : "Picapiedras",
+    "document" : {
+      "type" : {
+        "name" : "DNI",
+        "id" : 1
+      },
+      "info" : "0000000A"
+    },
+    "name" : "Pedro",
+    "id" : "3cc24c90-3da8-49fd-8755-f906dfdd9957",
+    "contacts" : [ {
+      "type" : {
+        "name" : "email",
+        "id" : 1
+      },
+      "info" : "example@gmail.com"
+    }, {
+      "type" : {
+        "name" : "email",
+        "id" : 1
+      },
+      "info" : "example@gmail.com"
+    } ]
+  },
+  "description" : "Description",
+  "id" : "3cc24c90-3da8-49fd-8755-f906dfdd9957"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Filtered diagnoses
+        
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#Contact"><code>Contact</code></a></li>
+    <li><a href="#ContactType"><code>ContactType</code></a></li>
+    <li><a href="#CreateDiagnosisRequest"><code>CreateDiagnosisRequest</code></a></li>
+    <li><a href="#Diagnosis"><code>Diagnosis</code></a></li>
+    <li><a href="#Document"><code>Document</code></a></li>
+    <li><a href="#DocumentType"><code>DocumentType</code></a></li>
+    <li><a href="#Patient"><code>Patient</code></a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="Contact"><code>Contact</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">info (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: example@gmail.com</span></div>
+<div class="param">type (optional)</div><div class="param-desc"><span class="param-type"><a href="#ContactType">ContactType</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ContactType"><code>ContactType</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: email</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CreateDiagnosisRequest"><code>CreateDiagnosisRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">patient_id </div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+          <div class="param-desc"><span class="param-type">example: 3cc24c90-3da8-49fd-8755-f906dfdd9957</span></div>
+<div class="param">description </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">prescription (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Diagnosis"><code>Diagnosis</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+          <div class="param-desc"><span class="param-type">example: 3cc24c90-3da8-49fd-8755-f906dfdd9957</span></div>
+<div class="param">patient (optional)</div><div class="param-desc"><span class="param-type"><a href="#Patient">Patient</a></span>  </div>
+<div class="param">date (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  format: date</div>
+          <div class="param-desc"><span class="param-type">example: Sun Jan 01 00:00:00 GMT 2023</span></div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Description</span></div>
+<div class="param">prescription (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Prescrition</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Document"><code>Document</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">info (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0000000A</span></div>
+<div class="param">type (optional)</div><div class="param-desc"><span class="param-type"><a href="#DocumentType">DocumentType</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="DocumentType"><code>DocumentType</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#BigDecimal">BigDecimal</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: DNI</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Patient"><code>Patient</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#UUID">UUID</a></span>  format: uuid</div>
+          <div class="param-desc"><span class="param-type">example: 3cc24c90-3da8-49fd-8755-f906dfdd9957</span></div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Pedro</span></div>
+<div class="param">surname (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Picapiedras</span></div>
+<div class="param">document (optional)</div><div class="param-desc"><span class="param-type"><a href="#Document">Document</a></span>  </div>
+<div class="param">contacts (optional)</div><div class="param-desc"><span class="param-type"><a href="#Contact">array[Contact]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
