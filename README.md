@@ -2,11 +2,13 @@
 
  ## Prerequisites
 
- Install Golang: https://go.dev/doc/install
+ - Install Golang: https://go.dev/doc/install
  
- Install Makefile: https://medium.com/@samsorrahman/how-to-run-a-makefile-in-windows-b4d115d7c516
+ - Install Makefile: https://medium.com/@samsorrahman/how-to-run-a-makefile-in-windows-b4d115d7c516
  
- Install golangci-lint: https://golangci-lint.run/
+ - Install golangci-lint: https://golangci-lint.run/
+
+ - Create local-env/config.yaml, add same env variables than local-env/config-example.yaml and set their values according to your Postgres connection.
 
  ## Run
 
