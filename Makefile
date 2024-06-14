@@ -6,7 +6,6 @@ run: ## It runs the main app
 lint: ## It starts the linter report
 	@golangci-lint run --color always ./...
 
-
 .PHONY: test
 test: ## It runs the tests
 	go test ./...
