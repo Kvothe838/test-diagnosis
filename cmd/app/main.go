@@ -1,6 +1,7 @@
 package main
 
 import (
+	"TopDoctorsBackendChallenge/config"
 	"TopDoctorsBackendChallenge/internal/app/controller"
 	"TopDoctorsBackendChallenge/internal/app/server"
 	"TopDoctorsBackendChallenge/internal/database/postgres"
@@ -10,12 +11,19 @@ import (
 	"TopDoctorsBackendChallenge/internal/pkg/uuid"
 	"TopDoctorsBackendChallenge/internal/services"
 	"context"
+	"flag"
 )
 
 func main() {
+	filePath := flag.String("config", "", "path of configuration file")
+	flag.Parse()
+
 	ctx := context.Background()
 
-	db := postgres.New(ctx, "postgres", "topDoctors", "admin", "localhost")
+	var sources []config.Source
+	conf := config.New(ctx, *filePath, sources...)
+
+	db := postgres.New(ctx, conf.Postgres.User, conf.Postgres.DbName, conf.Postgres.Password, conf.Postgres.Host)
 	UUID := uuid.NewReal()
 	clock := clock.NewReal()
 
