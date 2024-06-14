@@ -9,11 +9,12 @@ import (
 	"time"
 )
 
-type diagnosesRepository struct {
+type repository struct {
 	diagnoses []models.Diagnosis
+	patients  []models.Patient
 }
 
-func NewDiagnosesRepository() *diagnosesRepository {
+func NewRepository() *repository {
 	patients := []models.Patient{
 		{
 			ID:      uuid.New().String(),
@@ -24,7 +25,7 @@ func NewDiagnosesRepository() *diagnosesRepository {
 
 	now := time.Now()
 
-	return &diagnosesRepository{
+	return &repository{
 		diagnoses: []models.Diagnosis{
 			{
 				ID:      uuid.New().String(),
@@ -32,10 +33,11 @@ func NewDiagnosesRepository() *diagnosesRepository {
 				Date:    now,
 			},
 		},
+		patients: patients,
 	}
 }
 
-func (r diagnosesRepository) SearchDiagnoses(ctx context.Context, filters models.SearchDiagnosesFilters) ([]models.Diagnosis, error) {
+func (r repository) SearchDiagnoses(ctx context.Context, filters models.SearchDiagnosesFilters) ([]models.Diagnosis, error) {
 	filterByPatientName := len(filters.PatientName) != 0
 	filterByDate := !filters.Date.IsZero()
 
@@ -47,6 +49,17 @@ func (r diagnosesRepository) SearchDiagnoses(ctx context.Context, filters models
 	})
 
 	return filteredDiagnoses, nil
+}
+
+func (r *repository) CreateDiagnosis(ctx context.Context, diagnosis models.Diagnosis) (models.Diagnosis, error) {
+	r.diagnoses = append(r.diagnoses, diagnosis)
+	for _, patient := range r.patients {
+		if patient.ID == diagnosis.Patient.ID {
+			diagnosis.Patient = patient
+		}
+	}
+
+	return diagnosis, nil
 }
 
 func doesDateFilterMatch(diagnoseDate, filtersDate time.Time) bool {
