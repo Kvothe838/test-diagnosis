@@ -209,3 +209,121 @@ func TestCreateDiagnosis(t *testing.T) {
 	}
 
 }
+
+func TestSearchDiagnoses(t *testing.T) {
+	patientName := "pedro"
+	date := time.Now()
+	now := time.Now()
+	diagnosisID := uuid.New().String()
+	description := "Test description"
+	prescription := "Test prescription"
+
+	tests := []struct {
+		name                string
+		prepareRepositories func(*MockRepository)
+		filters             models.SearchDiagnosesFilters
+		assertOnResult      func(diagnoses []models.Diagnosis, err error)
+	}{
+		{
+			name: "success with empty response",
+			prepareRepositories: func(mock *MockRepository) {
+				mock.EXPECT().SearchDiagnoses(
+					gomock.Any(),
+					models.SearchDiagnosesFilters{
+						PatientName: patientName,
+						Date:        date,
+					},
+				).Return(
+					nil,
+					nil,
+				)
+			},
+			filters: models.SearchDiagnosesFilters{
+				PatientName: patientName,
+				Date:        date,
+			},
+			assertOnResult: func(diagnoses []models.Diagnosis, err error) {
+				assert.NoError(t, err)
+				assert.Empty(t, diagnoses)
+			},
+		},
+		{
+			name: "success with responses",
+			prepareRepositories: func(mock *MockRepository) {
+				mock.EXPECT().SearchDiagnoses(
+					gomock.Any(),
+					models.SearchDiagnosesFilters{
+						PatientName: patientName,
+						Date:        date,
+					},
+				).Return(
+					[]models.Diagnosis{
+						{
+							ID:           diagnosisID,
+							Patient:      models.Patient{},
+							Date:         date,
+							Description:  description,
+							Prescription: &prescription,
+						},
+					},
+					nil,
+				)
+			},
+			filters: models.SearchDiagnosesFilters{
+				PatientName: patientName,
+				Date:        date,
+			},
+			assertOnResult: func(diagnoses []models.Diagnosis, err error) {
+				assert.NoError(t, err)
+				assert.NotEmpty(t, diagnoses)
+				firstDiagnosis := diagnoses[0]
+				assert.Equal(t, diagnosisID, firstDiagnosis.ID)
+				assert.Equal(t, date, firstDiagnosis.Date)
+				assert.Equal(t, description, firstDiagnosis.Description)
+				assert.NotNil(t, firstDiagnosis.Prescription)
+				assert.Equal(t, prescription, *firstDiagnosis.Prescription)
+			},
+		},
+		{
+			name: "error when search diagnoses",
+			prepareRepositories: func(mock *MockRepository) {
+				mock.EXPECT().SearchDiagnoses(
+					gomock.Any(),
+					models.SearchDiagnosesFilters{
+						PatientName: patientName,
+						Date:        date,
+					},
+				).Return(
+					nil,
+					errors.New("error"),
+				)
+			},
+			filters: models.SearchDiagnosesFilters{
+				PatientName: patientName,
+				Date:        date,
+			},
+			assertOnResult: func(diagnoses []models.Diagnosis, err error) {
+				assert.Error(t, err)
+				assert.ErrorContains(t, err, "could not search for diagnoses")
+			},
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			repo := NewMockRepository(gomock.NewController(t))
+
+			if test.prepareRepositories != nil {
+				test.prepareRepositories(repo)
+			}
+
+			in := services.NewInteractor(repo, uuid2.NewFake(diagnosisID), clock.NewFake(now))
+			ctx := context.Background()
+			diagnoses, err := in.SearchDiagnoses(ctx, test.filters)
+			if test.assertOnResult != nil {
+				test.assertOnResult(diagnoses, err)
+			}
+		})
+	}
+
+}
