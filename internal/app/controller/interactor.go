@@ -6,7 +6,8 @@ import (
 )
 
 type diagnosesInteractor interface {
-	SearchDiagnoses(context.Context, models.SearchDiagnosesFilters) ([]models.Diagnose, error)
+	CreateDiagnosis(ctx context.Context, patientID, description string, prescription *string) (models.Diagnosis, error)
+	SearchDiagnoses(context.Context, models.SearchDiagnosesFilters) ([]models.Diagnosis, error)
 }
 
 type Interactor interface {

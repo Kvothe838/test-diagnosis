@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type Diagnose struct {
+type Diagnosis struct {
 	ID           string
 	Patient      Patient
 	Date         time.Time

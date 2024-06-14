@@ -39,3 +39,30 @@ func (h *handler) searchDiagnoses(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, diagnosesDTO)
 }
+
+func (h *handler) createDiagnosis(ctx *gin.Context) {
+	var body struct {
+		PatientID    string  `json:"patient_id"`
+		Description  string  `json:"description"`
+		Prescription *string `json:"prescription"`
+	}
+
+	err := ctx.BindJSON(&body)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": "could not bind body",
+		})
+		return
+	}
+
+	diagnosis, err := h.interactor.CreateDiagnosis(ctx, body.PatientID, body.Description, body.Prescription)
+	if err != nil {
+		logger.CtxErrorf(ctx, "could not create diagnosis for patient %s: %v", body.PatientID, err)
+		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	diagnosisDTO := mapToDiagnosisDTO(diagnosis)
+
+	ctx.JSON(http.StatusOK, diagnosisDTO)
+}

@@ -3,14 +3,35 @@ package postgres
 import (
 	"TopDoctorsBackendChallenge/internal/models"
 	"context"
+	"database/sql"
 	"github.com/pkg/errors"
 )
+
+func (r repository) DoesPatientExist(ctx context.Context, patientID string) (bool, error) {
+	query := `
+		SELECT 1
+		FROM patients
+		WHERE id = $1
+	`
+
+	var patientExists int
+	err := r.conn.QueryRowContext(ctx, query, patientID).Scan(&patientExists)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false, nil
+		}
+
+		return false, errors.Wrap(err, "could not check if patient exists")
+	}
+
+	return true, nil
+}
 
 func (r repository) getPatientByID(ctx context.Context, ID string) (models.Patient, error) {
 	query := `
 		SELECT id, name, surname, document_id
 		FROM patients
-		WHERE id = ?
+		WHERE id = $1
 	`
 
 	row := r.conn.QueryRowContext(ctx, query, ID)
@@ -38,7 +59,7 @@ func (r repository) getPatientDocumentByID(ctx context.Context, ID int) (models.
 		SELECT d.info, dt.id, dt.name
 		FROM documents d
 		JOIN document_types dt ON d.type_id = dt.id
-		WHERE d.id = ?
+		WHERE d.id = $1
 	`
 
 	row := r.conn.QueryRowContext(ctx, query, ID)
@@ -56,7 +77,7 @@ func (r *repository) getPatientContacts(ctx context.Context, patientID string) (
 		SELECT c.info, ct.id, ct.name
 		FROM contacts c
 		JOIN contact_types ct ON c.type_id = ct.id
-		WHERE c.patient_id = ?
+		WHERE c.patient_id = $1
 	`
 
 	rows, err := r.conn.QueryContext(ctx, query, patientID)
@@ -69,7 +90,7 @@ func (r *repository) getPatientContacts(ctx context.Context, patientID string) (
 	for rows.Next() {
 		var contact models.Contact
 
-		err = rows.Scan(&contact.Info, contact.Type.ID, contact.Type.Name)
+		err = rows.Scan(&contact.Info, &contact.Type.ID, &contact.Type.Name)
 		if err != nil {
 			return nil, errors.Wrap(err, "could not scan contact")
 		}

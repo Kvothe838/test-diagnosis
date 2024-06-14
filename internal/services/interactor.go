@@ -6,15 +6,25 @@ import (
 )
 
 type diagnosesRepository interface {
-	SearchDiagnoses(context.Context, models.SearchDiagnosesFilters) ([]models.Diagnose, error)
+	CreateDiagnosis(context.Context, models.Diagnosis) (models.Diagnosis, error)
+	SearchDiagnoses(context.Context, models.SearchDiagnosesFilters) ([]models.Diagnosis, error)
 }
 
-func NewInteractor(diagnosesRepo diagnosesRepository) *interactor {
+type patientsRepository interface {
+	DoesPatientExist(ctx context.Context, patientID string) (bool, error)
+}
+
+type repository interface {
+	diagnosesRepository
+	patientsRepository
+}
+
+func NewInteractor(repo repository) *interactor {
 	return &interactor{
-		diagnosesRepo: diagnosesRepo,
+		repo: repo,
 	}
 }
 
 type interactor struct {
-	diagnosesRepo diagnosesRepository
+	repo repository
 }

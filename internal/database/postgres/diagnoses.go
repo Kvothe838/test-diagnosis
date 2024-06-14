@@ -6,7 +6,25 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (r repository) SearchDiagnoses(ctx context.Context, filters models.SearchDiagnosesFilters) ([]models.Diagnose, error) {
+func (r *repository) CreateDiagnosis(ctx context.Context, diagnosis models.Diagnosis) (models.Diagnosis, error) {
+	query := `
+		INSERT INTO diagnoses (id, patient_id, description, prescription, date)
+		VALUES ($1, $2, $3, $4, $5)
+	`
+
+	_, err := r.conn.ExecContext(ctx, query, diagnosis.ID, diagnosis.Patient.ID, diagnosis.Description, diagnosis.Prescription, diagnosis.Date)
+	if err != nil {
+		return models.Diagnosis{}, errors.Wrap(err, "could not execute create diagnosis query")
+	}
+
+	diagnosis.Patient, err = r.getPatientByID(ctx, diagnosis.Patient.ID)
+	if err != nil {
+		return models.Diagnosis{}, errors.Wrap(err, "could not get patient after creating diagnosis")
+	}
+
+	return diagnosis, nil
+}
+func (r *repository) SearchDiagnoses(ctx context.Context, filters models.SearchDiagnosesFilters) ([]models.Diagnosis, error) {
 	baseQuery := `
     SELECT d.id, d.patient_id, d.date, d.description, d.prescription 
     FROM diagnoses d
@@ -21,10 +39,10 @@ func (r repository) SearchDiagnoses(ctx context.Context, filters models.SearchDi
 
 	defer rows.Close()
 
-	diagnoses := make([]models.Diagnose, 0)
+	diagnoses := make([]models.Diagnosis, 0)
 
 	for rows.Next() {
-		var diagnose models.Diagnose
+		var diagnose models.Diagnosis
 
 		err = rows.Scan(&diagnose.ID, &diagnose.Patient.ID, &diagnose.Date, &diagnose.Description, &diagnose.Prescription)
 

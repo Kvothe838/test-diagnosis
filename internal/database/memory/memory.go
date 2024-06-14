@@ -10,7 +10,7 @@ import (
 )
 
 type diagnosesRepository struct {
-	diagnoses []models.Diagnose
+	diagnoses []models.Diagnosis
 }
 
 func NewDiagnosesRepository() *diagnosesRepository {
@@ -25,7 +25,7 @@ func NewDiagnosesRepository() *diagnosesRepository {
 	now := time.Now()
 
 	return &diagnosesRepository{
-		diagnoses: []models.Diagnose{
+		diagnoses: []models.Diagnosis{
 			{
 				ID:      uuid.New().String(),
 				Patient: patients[0],
@@ -35,11 +35,11 @@ func NewDiagnosesRepository() *diagnosesRepository {
 	}
 }
 
-func (r diagnosesRepository) SearchDiagnoses(ctx context.Context, filters models.SearchDiagnosesFilters) ([]models.Diagnose, error) {
+func (r diagnosesRepository) SearchDiagnoses(ctx context.Context, filters models.SearchDiagnosesFilters) ([]models.Diagnosis, error) {
 	filterByPatientName := len(filters.PatientName) != 0
 	filterByDate := !filters.Date.IsZero()
 
-	filteredDiagnoses := lo.Filter(r.diagnoses, func(diagnose models.Diagnose, _ int) bool {
+	filteredDiagnoses := lo.Filter(r.diagnoses, func(diagnose models.Diagnosis, _ int) bool {
 		passPatientNameFilter := !filterByPatientName || doesPatientNameFilterMatch(diagnose.Patient.GetFullName(), filters.PatientName)
 		passDateFilter := !filterByDate || doesDateFilterMatch(diagnose.Date, filters.Date)
 

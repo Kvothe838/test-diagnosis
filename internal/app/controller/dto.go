@@ -6,11 +6,11 @@ import (
 	"time"
 )
 
-type diagnoseDTO struct {
+type diagnosisDTO struct {
 	Patient      patientDTO `json:"patient"`
 	Date         string     `json:"date,omitempty"`
 	Description  string     `json:"description"`
-	Prescription *string    `json:"prescription,omitempty""`
+	Prescription *string    `json:"prescription,omitempty"`
 }
 
 type patientDTO struct {
@@ -40,15 +40,19 @@ type contactTypeDTO struct {
 	Name string `json:"name"`
 }
 
-func mapToDiagnosesDTO(diagnoses []models.Diagnose) []diagnoseDTO {
-	return lo.Map(diagnoses, func(diagnose models.Diagnose, _ int) diagnoseDTO {
-		return diagnoseDTO{
-			Patient:      mapToPatientDTO(diagnose.Patient),
-			Date:         mapToDateDTO(diagnose.Date),
-			Description:  diagnose.Description,
-			Prescription: diagnose.Prescription,
-		}
+func mapToDiagnosesDTO(diagnoses []models.Diagnosis) []diagnosisDTO {
+	return lo.Map(diagnoses, func(diagnosis models.Diagnosis, _ int) diagnosisDTO {
+		return mapToDiagnosisDTO(diagnosis)
 	})
+}
+
+func mapToDiagnosisDTO(diagnosis models.Diagnosis) diagnosisDTO {
+	return diagnosisDTO{
+		Patient:      mapToPatientDTO(diagnosis.Patient),
+		Date:         mapToDateDTO(diagnosis.Date),
+		Description:  diagnosis.Description,
+		Prescription: diagnosis.Prescription,
+	}
 }
 
 func mapToDateDTO(date time.Time) string {
