@@ -26,3 +26,5 @@ go.work.sum
 
 local-env/*
 !local-env/config-example.yaml
+
+.idea/
