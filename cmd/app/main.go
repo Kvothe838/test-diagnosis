@@ -29,7 +29,7 @@ func main() {
 
 	interactor := services.NewInteractor(db, UUID, clock)
 
-	setupRestAPI(ctx, interactor, "8080")
+	setupRestAPI(ctx, interactor, conf.Port)
 
 	if err := graceful.Wait(); err != nil {
 		logger.CtxWarn(ctx, err)
