@@ -1,6 +1,6 @@
-﻿# TopDoctors Backend Challenge
+﻿# Diagnosis Platform
 
- Solution for Top Doctors Backend Challenge: https://bitbucket.org/topdoctors/backend-developer/src/master/challenge.md.
+ This is a technical test for the hiring process of a backend developer position. Requirements are no longer available.
 
  ## Prerequisites
 
