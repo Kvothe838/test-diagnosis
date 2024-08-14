@@ -1,10 +1,11 @@
 package postgres
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
 	"context"
 	"database/sql"
-	"github.com/pkg/errors"
+	"fmt"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
 )
 
 func (r *repository) DoesPatientExist(ctx context.Context, patientID string) (bool, error) {
@@ -21,7 +22,7 @@ func (r *repository) DoesPatientExist(ctx context.Context, patientID string) (bo
 			return false, nil
 		}
 
-		return false, errors.Wrap(err, "could not check if patient exists")
+		return false, fmt.Errorf("could not check if patient exists: %w", err)
 	}
 
 	return true, nil
@@ -38,17 +39,17 @@ func (r *repository) getPatientByID(ctx context.Context, ID string) (models.Pati
 	var patient models.Patient
 	err := row.Scan(&patient.ID, &patient.Name, &patient.Surname, &patient.Document.ID)
 	if err != nil {
-		return models.Patient{}, errors.Wrap(err, "could not scan patient")
+		return models.Patient{}, fmt.Errorf("could not scan patient: %w", err)
 	}
 
 	patient.Document, err = r.getPatientDocumentByID(ctx, patient.Document.ID)
 	if err != nil {
-		return models.Patient{}, errors.Wrap(err, "could not get patient document")
+		return models.Patient{}, fmt.Errorf("could not get patient document: %w", err)
 	}
 
 	patient.Contacts, err = r.getPatientContacts(ctx, patient.ID)
 	if err != nil {
-		return models.Patient{}, errors.Wrap(err, "could not get patient contacts")
+		return models.Patient{}, fmt.Errorf("could not get patient contacts: %w", err)
 	}
 
 	return patient, nil
@@ -66,7 +67,7 @@ func (r *repository) getPatientDocumentByID(ctx context.Context, ID int) (models
 	var document models.Document
 	err := row.Scan(&document.Info, &document.Type.ID, &document.Type.Name)
 	if err != nil {
-		return models.Document{}, errors.Wrap(err, "could not scan patient")
+		return models.Document{}, fmt.Errorf("could not scan patient: %w", err)
 	}
 
 	return document, nil
@@ -82,7 +83,7 @@ func (r *repository) getPatientContacts(ctx context.Context, patientID string) (
 
 	rows, err := r.conn.QueryContext(ctx, query, patientID)
 	if err != nil {
-		return nil, errors.Wrapf(err, "could not execute query to get patient contacts for patient ID %s", patientID)
+		return nil, fmt.Errorf("could not execute query to get patient contacts for patient ID %s, err: %w", patientID, err)
 	}
 
 	contacts := make([]models.Contact, 0)
@@ -92,7 +93,7 @@ func (r *repository) getPatientContacts(ctx context.Context, patientID string) (
 
 		err = rows.Scan(&contact.Info, &contact.Type.ID, &contact.Type.Name)
 		if err != nil {
-			return nil, errors.Wrap(err, "could not scan contact")
+			return nil, fmt.Errorf("could not scan contact: %w", err)
 		}
 
 		contacts = append(contacts, contact)

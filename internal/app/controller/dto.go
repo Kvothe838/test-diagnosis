@@ -1,9 +1,10 @@
 package controller
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
-	"github.com/samber/lo"
 	"time"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
+	"github.com/samber/lo"
 )
 
 type diagnosisDTO struct {
@@ -56,7 +57,7 @@ func mapToDiagnosisDTO(diagnosis models.Diagnosis) diagnosisDTO {
 }
 
 func mapToDateDTO(date time.Time) string {
-	return date.Format(time.DateTime)
+	return date.Format(time.Layout)
 }
 
 func mapToPatientDTO(patient models.Patient) patientDTO {

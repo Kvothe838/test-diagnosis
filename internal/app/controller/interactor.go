@@ -1,8 +1,9 @@
 package controller
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
 	"context"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
 )
 
 type diagnosesInteractor interface {

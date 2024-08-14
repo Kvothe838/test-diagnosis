@@ -1,17 +1,18 @@
 package services_tests
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
-	"TopDoctorsBackendChallenge/internal/pkg/clock"
-	topDoctorsErrors "TopDoctorsBackendChallenge/internal/pkg/errors"
-	uuid2 "TopDoctorsBackendChallenge/internal/pkg/uuid"
-	"TopDoctorsBackendChallenge/internal/services"
 	"context"
-	"github.com/golang/mock/gomock"
-	"github.com/pkg/errors"
+	"errors"
 	"testing"
 	"time"
 
+	"github.com/Kvothe838/test-diagnosis/internal/models"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/clock"
+	internalErrors "github.com/Kvothe838/test-diagnosis/internal/pkg/errors"
+	uuid2 "github.com/Kvothe838/test-diagnosis/internal/pkg/uuid"
+	"github.com/Kvothe838/test-diagnosis/internal/services"
+
+	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
@@ -123,7 +124,7 @@ func TestCreateDiagnosis(t *testing.T) {
 			prescription: &prescription,
 			assertOnResult: func(diagnosis models.Diagnosis, err error) {
 				assert.Error(t, err)
-				assert.ErrorIs(t, errors.Cause(err), topDoctorsErrors.PatientNotFoundErr)
+				assert.True(t, errors.Is(err, internalErrors.PatientNotFoundErr))
 			},
 		},
 		{

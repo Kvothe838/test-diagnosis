@@ -1,10 +1,11 @@
 package services
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
-	"TopDoctorsBackendChallenge/internal/pkg/clock"
-	uuid2 "TopDoctorsBackendChallenge/internal/pkg/uuid"
 	"context"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/clock"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/uuid"
 )
 
 type diagnosesRepository interface {
@@ -21,7 +22,7 @@ type repository interface {
 	patientsRepository
 }
 
-func NewInteractor(repo repository, UUID uuid2.UUID, clock clock.Clock) *interactor {
+func NewInteractor(repo repository, UUID uuid.UUID, clock clock.Clock) *interactor {
 	return &interactor{
 		repo:  repo,
 		UUID:  UUID,
@@ -31,6 +32,6 @@ func NewInteractor(repo repository, UUID uuid2.UUID, clock clock.Clock) *interac
 
 type interactor struct {
 	repo  repository
-	UUID  uuid2.UUID
+	UUID  uuid.UUID
 	clock clock.Clock
 }

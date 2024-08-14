@@ -1,11 +1,12 @@
 package controller
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
-	"TopDoctorsBackendChallenge/internal/pkg/logger"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/logger"
+	"github.com/gin-gonic/gin"
 )
 
 func (h *handler) searchDiagnoses(ctx *gin.Context) {
@@ -14,7 +15,7 @@ func (h *handler) searchDiagnoses(ctx *gin.Context) {
 	var date time.Time
 	if len(dateParam) != 0 {
 		var err error
-		date, err = time.ParseInLocation(time.DateOnly, dateParam, time.Local)
+		date, err = time.ParseInLocation(time.Layout, dateParam, time.Local)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"message": "could not parse date",

@@ -1,12 +1,13 @@
 package postgres
 
 import (
-	"TopDoctorsBackendChallenge/internal/pkg/logger"
 	"context"
 	"fmt"
+	"log"
+
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/logger"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-	"log"
 )
 
 type repository struct {

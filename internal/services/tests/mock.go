@@ -1,10 +1,11 @@
 package services_tests
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
 	"context"
-	"github.com/golang/mock/gomock"
 	"reflect"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
+	"github.com/golang/mock/gomock"
 )
 
 type MockRepository struct {

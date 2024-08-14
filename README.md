@@ -42,5 +42,5 @@ make lint
 
 Postman and Swagger documentation is under /docs.
 
-Also, you can check Swagger API here: https://app.swaggerhub.com/apis/Kvothe838/TopDoctorsBackendChallenge/1.0.0
+Also, you can check Swagger API here: https://app.swaggerhub.com/apis/Kvothe838/TestDiagnosis/1.0.0
 

@@ -1,9 +1,10 @@
 package postgres
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
 	"context"
-	"github.com/pkg/errors"
+	"fmt"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
 )
 
 func (r *repository) CreateDiagnosis(ctx context.Context, diagnosis models.Diagnosis) (models.Diagnosis, error) {
@@ -14,12 +15,12 @@ func (r *repository) CreateDiagnosis(ctx context.Context, diagnosis models.Diagn
 
 	_, err := r.conn.ExecContext(ctx, query, diagnosis.ID, diagnosis.Patient.ID, diagnosis.Description, diagnosis.Prescription, diagnosis.Date)
 	if err != nil {
-		return models.Diagnosis{}, errors.Wrap(err, "could not execute create diagnosis query")
+		return models.Diagnosis{}, fmt.Errorf("could not execute create diagnosis query: %w", err)
 	}
 
 	diagnosis.Patient, err = r.getPatientByID(ctx, diagnosis.Patient.ID)
 	if err != nil {
-		return models.Diagnosis{}, errors.Wrap(err, "could not get patient after creating diagnosis")
+		return models.Diagnosis{}, fmt.Errorf("could not get patient after creating diagnosis: %w", err)
 	}
 
 	return diagnosis, nil
@@ -34,7 +35,7 @@ func (r *repository) SearchDiagnoses(ctx context.Context, filters models.SearchD
 	query, args := buildQuery(baseQuery, filters)
 	rows, err := r.conn.NamedQueryContext(ctx, query, args)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not execute search diagnoses query")
+		return nil, fmt.Errorf("could not execute search diagnoses query: %w", err)
 	}
 
 	defer rows.Close()
@@ -47,13 +48,13 @@ func (r *repository) SearchDiagnoses(ctx context.Context, filters models.SearchD
 		err = rows.Scan(&diagnose.ID, &diagnose.Patient.ID, &diagnose.Date, &diagnose.Description, &diagnose.Prescription)
 
 		if err != nil {
-			return nil, errors.Wrap(err, "could not scan row")
+			return nil, fmt.Errorf("could not scan row: %w", err)
 		}
 
 		diagnose.Patient, err = r.getPatientByID(ctx, diagnose.Patient.ID)
 		if err != nil {
-			return nil, errors.Wrapf(err, "could not get patient by ID %s for diagnose ID %s",
-				diagnose.Patient.ID, diagnose.ID)
+			return nil, fmt.Errorf("could not get patient by ID %s for diagnose ID %s, err: %w",
+				diagnose.Patient.ID, diagnose.ID, err)
 		}
 
 		diagnoses = append(diagnoses, diagnose)
@@ -61,7 +62,7 @@ func (r *repository) SearchDiagnoses(ctx context.Context, filters models.SearchD
 
 	err = rows.Err()
 	if err != nil {
-		return nil, errors.Wrap(err, "error encountered during iteration of rows")
+		return nil, fmt.Errorf("error encountered during iteration of rows: %w", err)
 	}
 
 	return diagnoses, nil

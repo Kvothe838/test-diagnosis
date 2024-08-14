@@ -1,20 +1,21 @@
 package services
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
-	topDoctorsErrors "TopDoctorsBackendChallenge/internal/pkg/errors"
 	"context"
-	"github.com/pkg/errors"
+	"fmt"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/errors"
 )
 
 func (in *interactor) CreateDiagnosis(ctx context.Context, patientID, description string, prescription *string) (models.Diagnosis, error) {
 	patientExists, err := in.repo.DoesPatientExist(ctx, patientID)
 	if err != nil {
-		return models.Diagnosis{}, errors.Wrap(err, "could not check if patient exists")
+		return models.Diagnosis{}, fmt.Errorf("could not check if patient exists: %w", err)
 	}
 
 	if !patientExists {
-		return models.Diagnosis{}, topDoctorsErrors.PatientNotFoundErr
+		return models.Diagnosis{}, errors.PatientNotFoundErr
 	}
 
 	now := in.clock.Now()
@@ -32,7 +33,7 @@ func (in *interactor) CreateDiagnosis(ctx context.Context, patientID, descriptio
 
 	diagnosis, err = in.repo.CreateDiagnosis(ctx, diagnosis)
 	if err != nil {
-		return models.Diagnosis{}, errors.Wrap(err, "could not create diagnosis")
+		return models.Diagnosis{}, fmt.Errorf("could not create diagnosis: %w", err)
 	}
 
 	return diagnosis, nil
@@ -41,7 +42,7 @@ func (in *interactor) CreateDiagnosis(ctx context.Context, patientID, descriptio
 func (in *interactor) SearchDiagnoses(ctx context.Context, filters models.SearchDiagnosesFilters) ([]models.Diagnosis, error) {
 	diagnoses, err := in.repo.SearchDiagnoses(ctx, filters)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not search for diagnoses")
+		return nil, fmt.Errorf("could not search for diagnoses: %w", err)
 	}
 
 	return diagnoses, nil

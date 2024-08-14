@@ -1,6 +1,6 @@
 port: 8080
 postgres:
     user: "postgres"
-    db_name: "topDoctors"
+    db_name: "TestDiagnosis"
     password: "admin"
     host: "localhost"

@@ -1,12 +1,13 @@
 package memory
 
 import (
-	"TopDoctorsBackendChallenge/internal/models"
 	"context"
-	"github.com/google/uuid"
-	"github.com/samber/lo"
 	"strings"
 	"time"
+
+	"github.com/Kvothe838/test-diagnosis/internal/models"
+	"github.com/google/uuid"
+	"github.com/samber/lo"
 )
 
 type repository struct {

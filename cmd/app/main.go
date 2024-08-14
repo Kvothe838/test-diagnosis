@@ -1,17 +1,18 @@
 package main
 
 import (
-	"TopDoctorsBackendChallenge/config"
-	"TopDoctorsBackendChallenge/internal/app/controller"
-	"TopDoctorsBackendChallenge/internal/app/server"
-	"TopDoctorsBackendChallenge/internal/database/postgres"
-	"TopDoctorsBackendChallenge/internal/pkg/clock"
-	"TopDoctorsBackendChallenge/internal/pkg/graceful"
-	"TopDoctorsBackendChallenge/internal/pkg/logger"
-	"TopDoctorsBackendChallenge/internal/pkg/uuid"
-	"TopDoctorsBackendChallenge/internal/services"
 	"context"
 	"flag"
+
+	"github.com/Kvothe838/test-diagnosis/config"
+	"github.com/Kvothe838/test-diagnosis/internal/app/controller"
+	"github.com/Kvothe838/test-diagnosis/internal/app/server"
+	"github.com/Kvothe838/test-diagnosis/internal/database/postgres"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/clock"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/graceful"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/logger"
+	"github.com/Kvothe838/test-diagnosis/internal/pkg/uuid"
+	"github.com/Kvothe838/test-diagnosis/internal/services"
 )
 
 func main() {
